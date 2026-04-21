@@ -8,3 +8,29 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Environment variables
+.env
+
+# uv lock (optional: keep if you want reproducible installs)
+# uv.lock
+
+# Alembic compiled artifacts
+alembic/__pycache__/
+alembic/versions/__pycache__/
+
+# Docker volumes / local data
+mysql_data/
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
