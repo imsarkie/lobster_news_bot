@@ -1,4 +1,5 @@
 from functools import lru_cache
+from urllib.parse import quote_plus
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -24,7 +25,7 @@ class Settings(BaseSettings):
     def database_url(self) -> str:
         """Async URL used by the application (aiomysql driver)."""
         return (
-            f"mysql+aiomysql://{self.mysql_user}:{self.mysql_password}"
+            f"mysql+aiomysql://{self.mysql_user}:{quote_plus(self.mysql_password)}"
             f"@{self.mysql_host}:{self.mysql_port}/{self.mysql_db}"
         )
 
@@ -32,7 +33,7 @@ class Settings(BaseSettings):
     def sync_database_url(self) -> str:
         """Sync URL used by Alembic migrations (pymysql driver)."""
         return (
-            f"mysql+pymysql://{self.mysql_user}:{self.mysql_password}"
+            f"mysql+pymysql://{self.mysql_user}:{quote_plus(self.mysql_password)}"
             f"@{self.mysql_host}:{self.mysql_port}/{self.mysql_db}"
         )
 
