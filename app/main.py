@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-from app.database import Base, engine, wait_for_db
+from app.database import Base, engine, ensure_database_exists, wait_for_db
 from app.scheduler import scheduler, setup_scheduler
 from app.worker import run_job
 
@@ -20,6 +20,9 @@ logger = logging.getLogger(__name__)
 async def lifespan(app: FastAPI):
     # ── Startup ──────────────────────────────────────────────────────────────
     logger.info("Starting up Lobster Bot…")
+
+    # Ensure the database exists (creates it if missing) before connecting.
+    await ensure_database_exists()
 
     # Wait for MySQL to be reachable (important in Docker Compose environments).
     await wait_for_db()

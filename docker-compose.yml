@@ -1,16 +1,17 @@
 services:
   db:
     image: mysql:8.0
-    restart: unless-stopped
+    container_name: lobster_db
+    restart: always
+    env_file:
+      - .env
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: ${MYSQL_DB:-lobster_bot}
-      MYSQL_USER: ${MYSQL_USER:-lobster}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-lobsterpassword}
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${MYSQL_DB}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
     volumes:
       - mysql_data:/var/lib/mysql
-    ports:
-      - "3306:3306"
     healthcheck:
       test:
         [
