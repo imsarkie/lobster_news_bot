@@ -17,10 +17,14 @@ def _build_message(story: dict) -> str:
     # Self-posts have no external URL; fall back to the comments page.
     url = story.get("url") or comments_url
 
+    tags = story.get("tags") or []
+    tags_line = ("  ".join(f"#{escape(t)}" for t in tags) + "\n") if tags else ""
+
     return (
         f"<b>{title}</b> (⭐ Score: {score})\n\n"
-        f"<b>Link:</b> {url} \n\n"
-        f"<b>Comments:</b> {comments_url} \n"
+        f"<b>Link:</b> {url}\n"
+        f"<b>Comments:</b> {comments_url}\n"
+        f"<b>Tags:</b> {tags_line}\n"
     )
 
 
